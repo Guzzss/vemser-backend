@@ -6,16 +6,19 @@ public class Exercicio2 {
 
         Scanner entrada = new Scanner(System.in);
 
-        System.out.println("Nesse jogo você tentara acertar o número escolhido :)");
+        System.out.println("Nesse jogo um jogador tentara acertar o número escolhido pelo outro jogador :)");
 
-        System.out.println("Digite um número: ");
+        System.out.println("Digite o número escolhido: ");
+        int numeroCerto = entrada.nextInt();
+
+        System.out.println("Tente acertar o número escolhido: ");
         int numeroEscolhido = entrada.nextInt();
 
-        while (numeroEscolhido != 15) {
+        while (numeroEscolhido != numeroCerto) {
 
-            if (numeroEscolhido < 15 ) {
+            if (numeroEscolhido < numeroCerto ) {
                 System.out.println("Numero errado, o numero a ser encontrado é maior do que você digitou.");
-            } else if (numeroEscolhido > 15) {
+            } else if (numeroEscolhido > numeroCerto) {
                 System.out.println("Numero errado, o numero a ser encontrado é menor do que você digitou.");
             }
             System.out.println("Digite outro número: ");

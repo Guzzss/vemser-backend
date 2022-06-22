@@ -11,8 +11,10 @@ public class Exercicio7 {
 
        for (int i = 0; i < 4; i++) {
            for (int a = 0; a < 4; a++) {
+
                System.out.println("Digite o valor: ");
                matriz[i][a] = entrada.nextInt();
+
                if (matriz[i][a] > 10) {
                    contador++;
                }

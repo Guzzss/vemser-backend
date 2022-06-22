@@ -6,7 +6,6 @@ public class Atividade8 {
 
         Scanner entrada = new Scanner(System.in);
 
-
         System.out.println("Digite o valor da base: ");
         double base = entrada.nextDouble();
 
