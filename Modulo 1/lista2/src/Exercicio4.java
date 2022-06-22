@@ -4,29 +4,30 @@ public class Exercicio4 {
 
     public static void main(String[] args) {
 
+        int[] numeros = new int[3];
+
         Scanner entrada = new Scanner(System.in);
 
-        System.out.println("Digite o primeiro número: ");
-        int n1 = entrada.nextInt();
-
-        System.out.println("Digite o segundo número: ");
-        int n2 = entrada.nextInt();
-
-        System.out.println("Digite o terceiro número: ");
-        int n3 = entrada.nextInt();
-
-        int vetor[]  = {n1, n2, n3};
-
-        int indice = 0;
-
-        if (n1 < n2 && n1 < n3) {
-            indice = 0;
-        } else if (n2 < n1 && n2 < n3) {
-            indice = 1;
-        } else if (n3 < n1 && n3 < n2) {
-            indice = 2;
+        for(int i = 0; i < 3; i ++){
+            System.out.println("Digite o " + (i + 1) + "º numero: ");
+            numeros[i] = entrada.nextInt();
         }
-        System.out.println("O menor valor está no indice: " + indice);
+
+        int menor = 0;
+        int posicaoMenor = 0;
+
+        for(int i = 0; i < 3; i ++){
+            if(i == 0){
+                menor = numeros[i];
+            } else {
+                if(menor > numeros[i]){
+                    menor = numeros[i];
+                    posicaoMenor = i;
+                };
+            }
+        }
+
+        System.out.println("A posição do menor número digitado é: " + posicaoMenor);
 
         entrada.close();
     }
