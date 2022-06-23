@@ -8,7 +8,4 @@ public interface Movimentacoes {
 
     public Boolean transferir(Conta conta, double valor);
 
-
-
-
 }

@@ -4,7 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         Endereco enderecoPaulo1 = new Endereco(1
                 , "90640-110"
                 , "Brasil"
