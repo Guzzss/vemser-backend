@@ -8,11 +8,15 @@ public class Cliente {
     Endereco[] enderecos = new Endereco[2];
 
     void imprimirContatos() {
-        System.out.println("contatos de " + this.nome + ": " + Arrays.toString(contatos));
+        if (contatos != null) {
+            System.out.println("contatos de " + this.nome + ": " + Arrays.toString(contatos));
+        }
     }
 
     void imprimirEnderecos() {
+        if (enderecos != null) {
         System.out.println("endereços de " + this.nome + ": " + Arrays.toString(enderecos));
+        }
     }
 
     void imprimirCliente() {

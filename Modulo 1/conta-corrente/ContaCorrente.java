@@ -15,7 +15,7 @@ public class ContaCorrente {
     }
 
     Boolean sacar(double sacar) {
-        if (retornarSaldoComChequeEspecial() >= sacar && sacar > 0) {
+        if (this.retornarSaldoComChequeEspecial() >= sacar && sacar > 0) {
             this.saldo -= sacar;
             return true;
         }
@@ -35,8 +35,8 @@ public class ContaCorrente {
     }
 
     Boolean transferir(ContaCorrente conta, double valor) {
-        if (retornarSaldoComChequeEspecial() >= valor && valor > 0) {
-            saldo -= valor;
+        if (this.retornarSaldoComChequeEspecial() >= valor && valor > 0) {
+            this.saldo -= valor;
             conta.depositar(valor);
             return true;
         }

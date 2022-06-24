@@ -1,6 +1,9 @@
-package conta_corrente2;
+package conta_corrente2.models;
 
-public class ContaCorrente extends Conta implements Impressoes {
+import conta_corrente2.abstracts.Conta;
+import conta_corrente2.interfaces.Impressao;
+
+public class ContaCorrente extends Conta implements Impressao {
 
 private Double chequeEspecial;
 
@@ -16,7 +19,7 @@ private Double chequeEspecial;
         this.chequeEspecial = chequeEspecial;
     }
 
-    Double retornarSaldoComChequeEspecial() {
+    public Double retornarSaldoComChequeEspecial() {
         return this.getSaldo() + this.chequeEspecial;
     }
 
@@ -36,17 +39,6 @@ private Double chequeEspecial;
             return true;
         }
         System.out.println("Erro ao sacar");
-        return false;
-    }
-
-    @Override
-    public Boolean transferir(Conta conta, double valor) {
-        if (this.retornarSaldoComChequeEspecial() >= valor && valor > 0) {
-            setSaldo(getSaldo() - valor);
-            conta.depositar(valor);
-            return true;
-        }
-        System.out.println("Erro na transferência");
         return false;
     }
 }

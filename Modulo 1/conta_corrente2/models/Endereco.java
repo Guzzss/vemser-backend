@@ -1,4 +1,4 @@
-package conta_corrente2;
+package conta_corrente2.models;
 
 public class Endereco {
 
@@ -90,7 +90,7 @@ public class Endereco {
         this.pais = pais;
     }
 
-    void imprimirEndereco() {
+    public void imprimirEndereco() {
         System.out.println("\ntipo do endereço: " + this.tipo
                 + "\nlogradouro: " + this.logradouro
                 + "\nnúmero: " + this.numero

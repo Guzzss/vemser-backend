@@ -1,5 +1,7 @@
 package conta_corrente2;
 
+import conta_corrente2.models.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -61,7 +63,7 @@ public class Main {
 
         ContaCorrente contaPaulo = new ContaCorrente(paulo,"137896-1", "7160", 500.00);
 
-        ContaPoupaca contaMarcos = new ContaPoupaca(marcos, "102468-2", "3749", 300.00);
+        ContaPoupanca contaMarcos = new ContaPoupanca(marcos, "102468-2", "3749", 300.00);
 
         //Testes dos metodos da classe Cliente
         paulo.imprimirCliente();
@@ -100,7 +102,6 @@ public class Main {
         System.out.println("Saldo com cheque especial: R$" + contaPaulo.retornarSaldoComChequeEspecial());
 
         System.out.println("______________________");
-
         System.out.println("Saldo Marcos: R$" + contaMarcos.getSaldo());
         System.out.println("Saldo Paulo: R$" + contaPaulo.getSaldo());
         contaPaulo.transferir(contaMarcos, 100);
@@ -133,10 +134,10 @@ public class Main {
         System.out.println("______________________");
 
         System.out.println("Saldo: R$" + contaMarcos.getSaldo());
-        contaMarcos.sacar(400);
+        contaMarcos.sacar(150);
         System.out.println("Saldo: R$" + contaMarcos.getSaldo());
 
-        System.out.println("______________________");
+        System.out.println("_____________________");
 
         System.out.println("Saldo Marcos: R$" + contaMarcos.getSaldo());
         System.out.println("Saldo Paulo: R$" + contaPaulo.getSaldo());

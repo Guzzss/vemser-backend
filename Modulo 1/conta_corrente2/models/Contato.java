@@ -1,4 +1,4 @@
-package conta_corrente2;
+package conta_corrente2.models;
 
 public class Contato {
 
@@ -40,7 +40,7 @@ public class Contato {
         this.tipo = tipo;
     }
 
-    void imprimirContato() {
+    public void imprimirContato() {
         System.out.println("descricão: " + this.descricao + ", telefone: " + this.telefone + ", tipo de contato " + this.tipo);
     }
 

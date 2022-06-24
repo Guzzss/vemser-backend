@@ -1,6 +1,8 @@
-package conta_corrente2;
+package conta_corrente2.interfaces;
 
-public interface Movimentacoes {
+import conta_corrente2.abstracts.Conta;
+
+public interface Movimentacao {
 
     public Boolean sacar (double sacar);
 

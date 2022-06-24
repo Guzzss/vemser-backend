@@ -1,14 +1,17 @@
-package conta_corrente2;
+package conta_corrente2.models;
 
-public class ContaPoupaca extends Conta implements Impressoes {
+import conta_corrente2.abstracts.Conta;
+import conta_corrente2.interfaces.Impressao;
+
+public class ContaPoupanca extends Conta implements Impressao {
 
     static final double JUROS_MENSAL = 1.01;
 
-    public ContaPoupaca() {
+    public ContaPoupanca() {
         super();
     }
 
-    public ContaPoupaca(Cliente cliente, String numeroConta, String agencia, Double saldo) {
+    public ContaPoupanca(Cliente cliente, String numeroConta, String agencia, Double saldo) {
         super(cliente, numeroConta, agencia, saldo);
     }
 

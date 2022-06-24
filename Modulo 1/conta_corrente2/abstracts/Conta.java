@@ -1,8 +1,11 @@
-package conta_corrente2;
+package conta_corrente2.abstracts;
 
-public abstract class Conta implements Movimentacoes {
+import conta_corrente2.interfaces.Movimentacao;
+import conta_corrente2.models.Cliente;
 
-    private  Cliente cliente;
+public abstract class Conta implements Movimentacao {
+
+    private Cliente cliente;
     private  String numeroConta;
     private String agencia;
     private  Double saldo;
@@ -51,7 +54,7 @@ public abstract class Conta implements Movimentacoes {
 
     @Override
     public Boolean sacar(double sacar) {
-        if (saldo >= sacar && sacar >= 0){
+        if (this.saldo >= sacar && sacar >= 0){
             this.saldo -= sacar;
             return true;
         }
@@ -71,10 +74,8 @@ public abstract class Conta implements Movimentacoes {
 
     @Override
     public Boolean transferir(Conta conta, double valor) {
-        if (this.saldo >= valor && valor > 0) {
-            this.saldo -= valor;
-            conta.depositar(valor);
-            return true;
+        if (this.sacar(valor)) {
+            return conta.depositar(valor);
         }
         System.out.println("Erro na transferência");
         return false;

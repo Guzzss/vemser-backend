@@ -120,56 +120,56 @@ public class Main {
         marcos.imprimirCliente();
         marcos.imprimirContatos();
         marcos.imprimirEnderecos();
-
-        //Testes do metodos da classe Contato
-        System.out.println("______________________");
-
-        contatoPaulo1.imprimirContato();
-        contatoPaulo2.imprimirContato();
-
-        System.out.println("______________________");
-
-        contatoMarcos1.imprimirContato();
-        contatoMarcos2.imprimirContato();
-
-        //Testes do metodos da classe Endereco
-        System.out.println("______________________");
-
-        enderecoPaulo1.imprimirEndereco();
-        enderecoPaulo2.imprimirEndereco();
-
-        System.out.println("______________________");
-
-        enderecoMarcos1.imprimirEndereco();
-        enderecoMarcos2.imprimirEndereco();
-
-        //Testes do metodos da classe ContaCorrente
-        System.out.println("______________________");
-
-        contaMarcos.imprimirContaCorrente();
-        contaPaulo.imprimirContaCorrente();
-
-        System.out.println("______________________");
-
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-        contaMarcos.sacar(20);
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-        contaMarcos.depositar(20);
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-
-        System.out.println("______________________");
-
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-        System.out.println("Cheque especial: R$" + contaMarcos.chequeEspecial);
-        System.out.println("Saldo com cheque especial: R$" + contaMarcos.retornarSaldoComChequeEspecial());
-
-        System.out.println("______________________");
-
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-        System.out.println("Saldo: R$" + contaPaulo.saldo);
-        contaPaulo.transferir(contaMarcos, 50);
-        System.out.println("Saldo: R$" + contaMarcos.saldo);
-        System.out.println("Saldo: R$" + contaPaulo.saldo);
+//
+//        //Testes do metodos da classe Contato
+//        System.out.println("______________________");
+//
+//        contatoPaulo1.imprimirContato();
+//        contatoPaulo2.imprimirContato();
+//
+//        System.out.println("______________________");
+//
+//        contatoMarcos1.imprimirContato();
+//        contatoMarcos2.imprimirContato();
+//
+//        //Testes do metodos da classe Endereco
+//        System.out.println("______________________");
+//
+//        enderecoPaulo1.imprimirEndereco();
+//        enderecoPaulo2.imprimirEndereco();
+//
+//        System.out.println("______________________");
+//
+//        enderecoMarcos1.imprimirEndereco();
+//        enderecoMarcos2.imprimirEndereco();
+//
+//        //Testes do metodos da classe ContaCorrente
+//        System.out.println("______________________");
+//
+//        contaMarcos.imprimirContaCorrente();
+//        contaPaulo.imprimirContaCorrente();
+//
+//        System.out.println("______________________");
+//
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//        contaMarcos.sacar(20);
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//        contaMarcos.depositar(20);
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//
+//        System.out.println("______________________");
+//
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//        System.out.println("Cheque especial: R$" + contaMarcos.chequeEspecial);
+//        System.out.println("Saldo com cheque especial: R$" + contaMarcos.retornarSaldoComChequeEspecial());
+//
+//        System.out.println("______________________");
+//
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//        System.out.println("Saldo: R$" + contaPaulo.saldo);
+//        contaPaulo.transferir(contaMarcos, 50);
+//        System.out.println("Saldo: R$" + contaMarcos.saldo);
+//        System.out.println("Saldo: R$" + contaPaulo.saldo);
 
 
 

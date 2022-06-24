@@ -1,4 +1,4 @@
-package conta_corrente2;
+package conta_corrente2.models;
 
 import java.util.Arrays;
 
@@ -52,25 +52,24 @@ public class Cliente {
         this.enderecos = enderecos;
     }
 
-    void imprimirContatos() {
+    public void imprimirContatos() {
         if (contatos != null) {
             System.out.println("contatos de " + this.nome + ": " + Arrays.toString(contatos));
         }
     }
 
-    void imprimirEnderecos() {
+    public void imprimirEnderecos() {
         if (enderecos != null) {
         System.out.println("endereços de " + this.nome + ": " + Arrays.toString(enderecos));
         }
     }
 
-
     @Override
     public String toString() {
-        return  nome + "\ncpf: " + cpf;
+        return this.nome + "\ncpf: " + this.cpf;
     }
 
-    void imprimirCliente() {
+    public void imprimirCliente() {
         System.out.println("Cliente: " + this.nome + "\ncpf: " + this.cpf);
     }
 }

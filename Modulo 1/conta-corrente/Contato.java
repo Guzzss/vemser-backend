@@ -6,7 +6,6 @@ public class Contato {
 
     void imprimirContato() {
         System.out.println("descricão: " + this.descricao + ", telefone: " + this.telefone + ", tipo de contato " + this.tipo);
-
     }
 
     public String toString() {
