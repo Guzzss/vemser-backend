@@ -16,13 +16,23 @@ public class ContaPagamento extends Conta implements Impressao {
 
     @Override
     public Boolean sacar(double sacar) {
-        double saldoComTaxa = this.getSaldo() - TAXA_SAQUE;
-        if (saldoComTaxa >= sacar && sacar > 0) {
+        double saldoComTaxa =  this.getSaldo()- TAXA_SAQUE;
+        if (saldoComTaxa > sacar) {
             setSaldo(saldoComTaxa - sacar);
             return true;
         }
         System.out.println("Operação não realizada");
         return false;
+    }
+
+    @Override
+    public Boolean transferir(Conta conta, double valorTranferido) {
+        if((valorTranferido > 0) && (valorTranferido < this.getSaldo())) {
+            this.setSaldo(this.getSaldo() - valorTranferido);
+            return conta.depositar(valorTranferido);
+        } else {
+            return false;
+        }
     }
 
     @Override
