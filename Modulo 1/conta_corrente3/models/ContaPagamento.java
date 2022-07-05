@@ -16,7 +16,7 @@ public class ContaPagamento extends Conta implements Impressao {
 
     @Override
     public Boolean sacar(double sacar) {
-        double saldoComTaxa =  this.getSaldo()- TAXA_SAQUE;
+        double saldoComTaxa =  this.getSaldo() - TAXA_SAQUE;
         if (saldoComTaxa > sacar) {
             setSaldo(saldoComTaxa - sacar);
             return true;
