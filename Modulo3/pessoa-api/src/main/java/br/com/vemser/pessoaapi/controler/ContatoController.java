@@ -3,6 +3,7 @@ package br.com.vemser.pessoaapi.controler;
 import br.com.vemser.pessoaapi.entity.Contato;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.ContatoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,11 +12,8 @@ import java.util.List;
 @RequestMapping("/contato") // localhost:8080/contato
 public class ContatoController {
 
+    @Autowired
     private ContatoService contatoService;
-
-    public ContatoController() {
-        contatoService = new ContatoService();
-    }
 
     @GetMapping // localhost:8080/contato
     public List<Contato> list() {

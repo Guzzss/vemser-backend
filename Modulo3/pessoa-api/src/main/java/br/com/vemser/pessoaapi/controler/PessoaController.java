@@ -1,7 +1,10 @@
 package br.com.vemser.pessoaapi.controler;
 
+import br.com.vemser.pessoaapi.PropertieReader;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.PessoaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,10 +13,15 @@ import java.util.List;
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
+    @Autowired
     private PessoaService pessoaService;
 
-    public PessoaController() {
-        pessoaService = new PessoaService();
+    @Autowired
+    private PropertieReader propertieReader;
+
+    @GetMapping("/ambiente")
+    public String retornarPropertie() {
+        return propertieReader.getAmbiente();
     }
 
     @GetMapping("/hello") // localhost:8080/pessoa/hello
@@ -22,7 +30,7 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) {
+    public Pessoa create(@RequestBody Pessoa pessoa) throws Exception {
         return pessoaService.create(pessoa);
     }
 
