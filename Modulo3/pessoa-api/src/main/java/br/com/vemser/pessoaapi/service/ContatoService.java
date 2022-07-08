@@ -1,9 +1,14 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.Exceptions.RegraDeNegocioException;
-import br.com.vemser.pessoaapi.Repository.ContatoRepository;
-import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
+import br.com.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.mapper.ContatoMapper;
+import br.com.vemser.pessoaapi.repository.ContatoRepository;
+import br.com.vemser.pessoaapi.entity.Contato;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ContatoService {
 
     @Autowired
@@ -19,41 +25,49 @@ public class ContatoService {
     @Autowired
     private PessoaService pessoaService;
 
-    public Contato create(Contato contato, Integer idPessoa) throws RegraDeNegocioException {
+    @Autowired
+    private ContatoMapper contatoMapper;
+
+    public ContatoDTO create(ContatoCreateDTO contato, Integer idPessoa) throws RegraDeNegocioException {
+        log.info("Contato criado");
         pessoaService.findById(idPessoa);
-        return contatoRepository.create(contato, idPessoa);
+        Contato contatoEntity = contatoMapper.fromCreateDTO(contato);
+        ContatoDTO contatoDTO = contatoMapper.toDTO(contatoRepository.create(contatoEntity, idPessoa));
+        return contatoDTO;
     }
 
-    public List<Contato> list() {
-        return contatoRepository.list();
+    public List<ContatoDTO> list() {
+        return contatoRepository.list().stream().map(contatoMapper::toDTO).toList();
     }
 
-    public Contato update(Integer id,
-                          Contato contatoAtualizar) throws RegraDeNegocioException {
+    public ContatoDTO update(Integer id,
+                          ContatoDTO contatoAtualizar) throws RegraDeNegocioException {
+        log.info("Contato alterado");
         Contato contatoRecuperado = findById(id);
-        contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa() != null ? contatoAtualizar.getIdPessoa() : contatoRecuperado.getIdPessoa());
+//        contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa() != null ? contatoAtualizar.getIdPessoa() : contatoRecuperado.getIdPessoa());
         contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato() != null ? contatoAtualizar.getTipoContato() : contatoRecuperado.getTipoContato());
         contatoRecuperado.setNumero(contatoAtualizar.getNumero() != null ? contatoAtualizar.getNumero() : contatoRecuperado.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao() != null ? contatoAtualizar.getDescricao() : contatoRecuperado.getDescricao());
-        return contatoRecuperado;
+        return contatoMapper.toDTO(contatoRecuperado);
     }
 
     public void delete(Integer id) throws Exception {
+        log.info("Contato deletado");
         Contato contatoRecuperado = findById(id);
         contatoRepository.delete(contatoRecuperado);
     }
 
-    public List<Contato> listContatosByIdPessoa(Integer id) {
-        return contatoRepository.list().stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
-                .collect(Collectors.toList());
+    public List<ContatoDTO> listContatosByIdPessoa(Integer id) {
+       List<Contato> contatoRecuperado = contatoRepository.list().stream()
+               .filter(pessoa -> pessoa.getIdPessoa().equals(id)).toList();
+        return contatoRecuperado.stream().map(contatoMapper::toDTO).toList();
     }
 
     public Contato findById(Integer idContato) throws RegraDeNegocioException {
         Contato contatoRecuperado = contatoRepository.list().stream()
                 .filter(contato -> contato.getIdContato().equals(idContato))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Contato não econtrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Contato não encontrado"));
         return contatoRecuperado;
     }
 }

@@ -1,8 +1,13 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.Exceptions.RegraDeNegocioException;
-import br.com.vemser.pessoaapi.Repository.PessoaRepository;
+import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
+import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.mapper.PessoaMapper;
+import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.entity.Pessoa;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,42 +17,48 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class PessoaService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public Pessoa create(Pessoa pessoa) throws Exception {
-        if (pessoa != null && ObjectUtils.isEmpty(pessoa)
-                && StringUtils.isBlank(pessoa.getNome())
-                && ObjectUtils.isEmpty(pessoa.getDataNascimento())
-                && StringUtils.isBlank(pessoa.getCpf())
-        ) {
-            return pessoaRepository.create(pessoa);
-        }
-        throw new RegraDeNegocioException("Ocorreu um erro");
+    @Autowired
+    PessoaMapper pessoaMapper;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    public PessoaDTO create(PessoaCreateDTO pessoa) throws Exception {
+        log.info("Pessoa criada");
+        Pessoa pessoaEntity = pessoaMapper.fromCreateDTO(pessoa);
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaRepository.create(pessoaEntity));
+        log.warn("Pessoa " + pessoaDTO.getNome() + " criada!");
+        return pessoaDTO;
     }
 
-    public List<Pessoa> list() {
-        return pessoaRepository.list();
+    public List<PessoaDTO> list() {
+        return pessoaRepository.list().stream().map(pessoaMapper::toDTO).toList();
     }
 
-    public Pessoa update(Integer id,
-                         Pessoa pessoaAtualizar) throws Exception {
+    public PessoaDTO update(Integer id,
+                         PessoaDTO pessoaAtualizar) throws Exception {
+        log.info("Pessoa alterada");
         Pessoa pessoaRecuperada = findById(id);
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
-        return pessoaRecuperada;
+        return pessoaMapper.toDTO(pessoaRecuperada);
     }
 
     public void delete(Integer id) throws Exception {
+        log.info("Pessoa deletada");
         Pessoa pessoaRecuperada = findById(id);
         pessoaRepository.delete(pessoaRecuperada);
     }
 
-    public List<Pessoa> listByName(String nome) {
-        return pessoaRepository.list().stream()
+    public List<PessoaDTO> listByName(String nome) {
+        return this.list().stream()
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .collect(Collectors.toList());
     }
@@ -56,7 +67,7 @@ public class PessoaService {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
         return pessoaRecuperada;
     }
 

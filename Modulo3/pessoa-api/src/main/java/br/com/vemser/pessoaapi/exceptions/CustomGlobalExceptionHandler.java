@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.Exceptions;
+package br.com.vemser.pessoaapi.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

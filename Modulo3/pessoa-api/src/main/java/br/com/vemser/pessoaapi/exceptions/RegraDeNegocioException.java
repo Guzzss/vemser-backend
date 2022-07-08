@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.Exceptions;
+package br.com.vemser.pessoaapi.exceptions;
 
 public class RegraDeNegocioException extends Exception{
 

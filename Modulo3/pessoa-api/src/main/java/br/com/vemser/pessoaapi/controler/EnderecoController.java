@@ -1,6 +1,6 @@
 package br.com.vemser.pessoaapi.controler;
 
-import br.com.vemser.pessoaapi.Exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;

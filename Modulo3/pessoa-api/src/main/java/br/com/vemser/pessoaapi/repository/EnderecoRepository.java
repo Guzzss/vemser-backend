@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.Repository;
+package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.TipoEndereco;

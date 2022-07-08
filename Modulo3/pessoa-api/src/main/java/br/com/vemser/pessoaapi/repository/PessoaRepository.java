@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.Repository;
+package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class PessoaRepository {

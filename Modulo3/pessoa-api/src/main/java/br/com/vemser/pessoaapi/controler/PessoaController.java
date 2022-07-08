@@ -1,10 +1,12 @@
 package br.com.vemser.pessoaapi.controler;
 
 import br.com.vemser.pessoaapi.PropertieReader;
+import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
+import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.PessoaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,23 +35,23 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public ResponseEntity<Pessoa> create(@Validated @RequestBody Pessoa pessoa) throws Exception {
+    public ResponseEntity<PessoaDTO> create(@Validated @RequestBody PessoaCreateDTO pessoa) throws Exception {
         return ResponseEntity.ok(pessoaService.create(pessoa));
     }
 
     @GetMapping // localhost:8080/pessoa
-    public List<Pessoa> list() {
+    public List<PessoaDTO> list() {
         return pessoaService.list();
     }
 
     @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@RequestParam("nome") String nome) {
+    public List<PessoaDTO> listByName(@RequestParam("nome") String nome) {
         return pessoaService.listByName(nome);
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody @Validated Pessoa pessoaAtualizar) throws Exception {
+    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
+                         @RequestBody @Validated PessoaDTO pessoaAtualizar) throws Exception {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 

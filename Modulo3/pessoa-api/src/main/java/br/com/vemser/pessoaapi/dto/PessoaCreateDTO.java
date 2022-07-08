@@ -1,19 +1,14 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.dto;
 
-import lombok.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class Pessoa {
-
-    private Integer idPessoa;
+@Data
+public class PessoaCreateDTO {
 
     @NotEmpty(message = "Nome não pode ser vazio, ou nulo")
     private String nome;
