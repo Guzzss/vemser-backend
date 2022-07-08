@@ -1,11 +1,18 @@
 package br.com.vemser.pessoaapi.entity;
 
+import javax.validation.constraints.*;
+
 public class Contato {
 
     private Integer idContato;
+//    @NotNull(message = "Não existe um pessoa com este id")
     private Integer idPessoa;
+    @NotNull(message = "O tipo do não pode ser nulo")
     private TipoContato tipoContato; //RESIDENCIAL(1)
+    @NotEmpty(message = "O Número não pode ser vazio, ou nulo")
+    @Size(message = "O Número não pode ter mais de 13 caracteres", max = 13)
     private String numero;
+    @NotEmpty(message = "À descrição não pode ser vazia, ou nula")
     private String descricao;
 
     public Contato(Integer idContato, Integer idPessoa, TipoContato tipoContato, String numero, String descricao) {
@@ -15,7 +22,6 @@ public class Contato {
         this.numero = numero;
         this.descricao = descricao;
     }
-
 
     public Integer getIdContato() {
         return idContato;

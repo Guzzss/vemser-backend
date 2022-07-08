@@ -1,7 +1,9 @@
 package br.com.vemser.pessoaapi.service;
 
+import br.com.vemser.pessoaapi.Exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.Repository.ContatoRepository;
 import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,21 @@ public class ContatoService {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    public Contato create(Contato contato, Integer idPessoa){
-        return  contatoRepository.create(contato, idPessoa);
+    @Autowired
+    private PessoaService pessoaService;
+
+    public Contato create(Contato contato, Integer idPessoa) throws RegraDeNegocioException {
+        pessoaService.findById(idPessoa);
+        return contatoRepository.create(contato, idPessoa);
     }
 
-    public List<Contato> list(){
+    public List<Contato> list() {
         return contatoRepository.list();
     }
 
     public Contato update(Integer id,
-                          Contato contatoAtualizar) throws Exception {
-        Contato contatoRecuperado = contatoRepository.list().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
+                          Contato contatoAtualizar) throws RegraDeNegocioException {
+        Contato contatoRecuperado = findById(id);
         contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa() != null ? contatoAtualizar.getIdPessoa() : contatoRecuperado.getIdPessoa());
         contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato() != null ? contatoAtualizar.getTipoContato() : contatoRecuperado.getTipoContato());
         contatoRecuperado.setNumero(contatoAtualizar.getNumero() != null ? contatoAtualizar.getNumero() : contatoRecuperado.getNumero());
@@ -36,10 +39,7 @@ public class ContatoService {
     }
 
     public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = contatoRepository.list().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
+        Contato contatoRecuperado = findById(id);
         contatoRepository.delete(contatoRecuperado);
     }
 
@@ -47,5 +47,13 @@ public class ContatoService {
         return contatoRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .collect(Collectors.toList());
+    }
+
+    public Contato findById(Integer idContato) throws RegraDeNegocioException {
+        Contato contatoRecuperado = contatoRepository.list().stream()
+                .filter(contato -> contato.getIdContato().equals(idContato))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Contato não econtrado"));
+        return contatoRecuperado;
     }
 }

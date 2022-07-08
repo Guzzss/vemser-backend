@@ -1,14 +1,18 @@
 package br.com.vemser.pessoaapi.controler;
 
+import br.com.vemser.pessoaapi.Exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/endereco") // localhost:8090/endereco
+@Validated
 public class EnderecoController {
 
     @Autowired
@@ -30,19 +34,19 @@ public class EnderecoController {
     }
 
     @PostMapping("/{idPessoa}") // localhost:8090/endereco
-    public Endereco create(@PathVariable("idPessoa") Integer id,
-                           @RequestBody Endereco endereco) {
-        return enderecoService.create(endereco, id);
+    public ResponseEntity<Endereco> create(@PathVariable("idPessoa") Integer id,
+                                          @RequestBody @Validated Endereco endereco) throws RegraDeNegocioException {
+        return ResponseEntity.ok(enderecoService.create(endereco, id));
     }
 
     @PutMapping("/{idEndereco}") // localhost:8090/endereco/1
-    public Endereco update(@PathVariable("idEndereco") Integer id,
-                           @RequestBody Endereco enderecoAtualizar) throws Exception {
-        return enderecoService.update(id, enderecoAtualizar);
+    public ResponseEntity<Endereco> update(@PathVariable("idEndereco") Integer id,
+                           @RequestBody @Validated Endereco enderecoAtualizar) throws RegraDeNegocioException {
+        return ResponseEntity.ok(enderecoService.update(id, enderecoAtualizar));
     }
 
     @DeleteMapping("/{idEndereco}") // localhost:8090/endereco/10
-    public void delete(@PathVariable("idEndereco") Integer id) throws Exception {
+    public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         enderecoService.delete(id);
     }
 }
