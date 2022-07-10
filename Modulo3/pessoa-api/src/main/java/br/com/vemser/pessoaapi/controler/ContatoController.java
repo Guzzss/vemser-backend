@@ -25,7 +25,7 @@ public class ContatoController {
     }
 
     @GetMapping("/{idPessoa}") // localhost:8080/contato/1
-    public List<ContatoDTO> listByName(@PathVariable("idPessoa") Integer id) { //Falta esse
+    public List<ContatoDTO> listByName(@PathVariable("idPessoa") Integer id) {
         return contatoService.listContatosByIdPessoa(id);
     }
 

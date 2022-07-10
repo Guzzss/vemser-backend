@@ -1,5 +1,7 @@
 package br.com.vemser.pessoaapi.controler;
 
+import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
+import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.service.EnderecoService;
@@ -19,29 +21,29 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @GetMapping// localhost:8090/endereco
-    public List<Endereco> list() {
+    public List<EnderecoDTO> list() {
         return enderecoService.list();
     }
 
     @GetMapping("/{idEndereco}") // localhost:8090/endereco/1
-    public List<Endereco> listByIdEndereco(@PathVariable("idEndereco") Integer id) {
+    public List<EnderecoDTO> listByIdEndereco(@PathVariable("idEndereco") Integer id) {
         return enderecoService.listEnderecoByIdEndereco(id);
     }
 
     @GetMapping("/{idPessoa}/pessoa") // localhost:8090/endereco/1/pessoa
-    public List<Endereco> listByIdPessoa(@PathVariable("idPessoa") Integer id) {
+    public List<EnderecoDTO> listByIdPessoa(@PathVariable("idPessoa") Integer id) {
         return enderecoService.listEnderecoByIdPessoa(id);
     }
 
     @PostMapping("/{idPessoa}") // localhost:8090/endereco
-    public ResponseEntity<Endereco> create(@PathVariable("idPessoa") Integer id,
-                                          @RequestBody @Validated Endereco endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer id,
+                                          @RequestBody @Validated EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.create(endereco, id));
     }
 
     @PutMapping("/{idEndereco}") // localhost:8090/endereco/1
-    public ResponseEntity<Endereco> update(@PathVariable("idEndereco") Integer id,
-                           @RequestBody @Validated Endereco enderecoAtualizar) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer id,
+                           @RequestBody @Validated EnderecoDTO enderecoAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.update(id, enderecoAtualizar));
     }
 

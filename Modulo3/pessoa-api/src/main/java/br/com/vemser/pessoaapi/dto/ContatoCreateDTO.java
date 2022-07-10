@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @Data
 public class ContatoCreateDTO {
 
+    private Integer idPessoa;
+
     @NotNull(message = "O tipo do não pode ser nulo")
     private TipoContato tipoContato; //RESIDENCIAL(1)
 
