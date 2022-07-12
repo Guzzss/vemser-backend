@@ -8,8 +8,6 @@ import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +22,19 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
 
     @Autowired
-    PessoaMapper pessoaMapper;
+    private PessoaMapper pessoaMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private EmailService emailService;
 
     public PessoaDTO create(PessoaCreateDTO pessoa) throws Exception {
         log.info("Pessoa criada");
         Pessoa pessoaEntity = pessoaMapper.fromCreateDTO(pessoa);
         PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaRepository.create(pessoaEntity));
+        emailService.sendEmail(pessoaDTO);
         log.warn("Pessoa " + pessoaDTO.getNome() + " criada!");
         return pessoaDTO;
     }
@@ -48,12 +50,16 @@ public class PessoaService {
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
-        return pessoaMapper.toDTO(pessoaRecuperada);
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaRecuperada);
+        emailService.sendUpdateEmail(pessoaDTO);
+        return pessoaDTO;
     }
 
     public void delete(Integer id) throws Exception {
         log.info("Pessoa deletada");
         Pessoa pessoaRecuperada = findById(id);
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaRecuperada);
+        emailService.deleteSendEmail(pessoaDTO);
         pessoaRepository.delete(pessoaRecuperada);
     }
 

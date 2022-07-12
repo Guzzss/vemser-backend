@@ -11,14 +11,10 @@ import org.springframework.stereotype.Component;
 public class ContatoMapper {
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     public ContatoDTO toDTO(Contato contato) {
         return objectMapper.convertValue(contato, ContatoDTO.class);
-    }
-
-    public Contato fromDTO (ContatoDTO contatoDto){
-        return objectMapper.convertValue(contatoDto, Contato.class);
     }
 
     public Contato fromCreateDTO(ContatoCreateDTO contatoCreateDTO) {

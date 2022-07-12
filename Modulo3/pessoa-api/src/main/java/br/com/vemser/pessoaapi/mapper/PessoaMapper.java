@@ -11,14 +11,10 @@ import org.springframework.stereotype.Component;
 public class PessoaMapper {
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     public PessoaDTO toDTO(Pessoa pessoa) {
         return objectMapper.convertValue(pessoa, PessoaDTO.class);
-    }
-
-    public Pessoa fromDTO (PessoaDTO pessoaDto){
-       return objectMapper.convertValue(pessoaDto, Pessoa.class);
     }
 
     public Pessoa fromCreateDTO(PessoaCreateDTO pessoaCreateDTO) {

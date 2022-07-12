@@ -4,7 +4,9 @@ import br.com.vemser.pessoaapi.PropertieReader;
 import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
+import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.PessoaService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,10 @@ public class PessoaController {
     @Autowired
     private PropertieReader propertieReader;
 
+    @Autowired
+    private EmailService emailService;
+
+
     @GetMapping("/ambiente")
     public String retornarPropertie() {
         return propertieReader.getAmbiente();
@@ -33,6 +39,14 @@ public class PessoaController {
     public String hello() {
         return "Hello world!";
     }
+
+//    @SneakyThrows
+//    @GetMapping("/email")
+//    public String email() {
+//        //emailService.sendWithAttachment();
+//        emailService.sendEmail();
+//        return "Enviando E-mail..";
+//    }
 
     @PostMapping // localhost:8080/pessoa
     public ResponseEntity<PessoaDTO> create(@Validated @RequestBody PessoaCreateDTO pessoa) throws Exception {

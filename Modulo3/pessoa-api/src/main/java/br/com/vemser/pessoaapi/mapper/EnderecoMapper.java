@@ -12,14 +12,10 @@ import org.springframework.stereotype.Component;
 public class EnderecoMapper {
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     public EnderecoDTO toDTO(Endereco endereco) {
         return objectMapper.convertValue(endereco, EnderecoDTO.class);
-    }
-
-    public Endereco fromDTO (EnderecoDTO enderecoDto){
-        return objectMapper.convertValue(enderecoDto, Endereco.class);
     }
 
     public Endereco fromCreateDTO(EnderecoCreateDTO enderecoCreateDTO) {

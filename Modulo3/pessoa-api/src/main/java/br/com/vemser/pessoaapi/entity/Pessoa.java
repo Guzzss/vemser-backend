@@ -15,15 +15,16 @@ public class Pessoa {
 
     private Integer idPessoa;
 
-    @NotEmpty(message = "Nome não pode ser vazio, ou nulo")
+    private String email;
+//    @NotEmpty(message = "Nome não pode ser vazio, ou nulo")
     private String nome;
-
-    @NotNull(message = "Informe a data de nasc")
-    @Past(message = "a data deve estar no passado")
+//
+//    @NotNull(message = "Informe a data de nasc")
+//    @Past(message = "a data deve estar no passado")
     private LocalDate dataNascimento;
 
-    @NotEmpty(message = "Informe o cpf")
-    @CPF(message = "Ocorreu um erro ao cadastrar cpf")
+//    @NotEmpty(message = "Informe o cpf")
+//    @CPF(message = "Ocorreu um erro ao cadastrar cpf")
     private String cpf;
 
 }

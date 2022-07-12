@@ -3,9 +3,12 @@ package br.com.vemser.pessoaapi.service;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.mapper.EnderecoMapper;
+import br.com.vemser.pessoaapi.mapper.PessoaMapper;
 import br.com.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,12 @@ public class EnderecoService {
     @Autowired
     private EnderecoMapper enderecoMapper;
 
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private PessoaMapper pessoaMapper;
+
     public List<EnderecoDTO> list() {
         return enderecoRepository.list().stream().map(enderecoMapper::toDTO).toList();
     }
@@ -49,6 +58,8 @@ public class EnderecoService {
         pessoaService.findById(idPessoa);
         Endereco enderecoEntity = enderecoMapper.fromCreateDTO(endereco);
         EnderecoDTO enderecoDTO = enderecoMapper.toDTO(enderecoRepository.create(enderecoEntity, idPessoa));
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(idPessoa));
+        emailService.sendEnderecoEmail(pessoaDTO, enderecoDTO);
         return enderecoDTO;
     }
     public EnderecoDTO update(Integer id,
@@ -64,12 +75,17 @@ public class EnderecoService {
         enderecoRecuperado.setCidade(enderecoAtualizar.getCidade() != null ? enderecoAtualizar.getCidade() : enderecoRecuperado.getCidade());
         enderecoRecuperado.setEstado(enderecoAtualizar.getEstado() != null ? enderecoAtualizar.getEstado() : enderecoRecuperado.getEstado());
         enderecoRecuperado.setPais(enderecoAtualizar.getPais() != null ? enderecoAtualizar.getPais() : enderecoRecuperado.getPais());
-        return enderecoMapper.toDTO(enderecoRecuperado);
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(id));
+        EnderecoDTO enderecoDTO = enderecoMapper.toDTO(enderecoRecuperado);
+        emailService.sendUpdateEnderecoEmail(pessoaDTO, enderecoDTO);
+        return enderecoDTO;
     }
+
 
     public void delete(Integer id) throws RegraDeNegocioException {
         log.info("Endereco deletado");
         Endereco enderecoRecuperado = findById(id);
+        emailService.sendDeleteEnderecoEmail(pessoaMapper.toDTO(pessoaService.findById(id)), enderecoMapper.toDTO(enderecoRecuperado));
         enderecoRepository.delete(enderecoRecuperado);
     }
 
