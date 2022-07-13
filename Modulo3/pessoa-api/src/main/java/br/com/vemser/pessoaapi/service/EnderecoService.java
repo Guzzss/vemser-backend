@@ -1,11 +1,8 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.vemser.pessoaapi.entity.Contato;
-import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.mapper.EnderecoMapper;
 import br.com.vemser.pessoaapi.mapper.PessoaMapper;

@@ -102,7 +102,7 @@ public class EmailService {
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setTo(pessoaDTO.getEmail());
             mimeMessageHelper.setSubject("Atualizando dados");
-            mimeMessageHelper.setText(UpdateContentFromTemplate(pessoaDTO.getNome()), true);
+            mimeMessageHelper.setText(updateContentFromTemplate(pessoaDTO.getNome()), true);
 
             emailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException | IOException | TemplateException e) {
@@ -110,7 +110,7 @@ public class EmailService {
         }
     }
 
-    public String UpdateContentFromTemplate(String nome) throws IOException, TemplateException {
+    public String updateContentFromTemplate(String nome) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", nome);
         dados.put("from", from);
