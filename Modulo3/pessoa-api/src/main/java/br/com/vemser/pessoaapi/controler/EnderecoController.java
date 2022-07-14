@@ -3,7 +3,6 @@ package br.com.vemser.pessoaapi.controler;
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
-import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

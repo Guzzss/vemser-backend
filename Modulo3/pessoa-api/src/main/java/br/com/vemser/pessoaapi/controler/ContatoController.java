@@ -2,7 +2,6 @@ package br.com.vemser.pessoaapi.controler;
 
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
-import br.com.vemser.pessoaapi.entity.Contato;
 import br.com.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contato") // localhost:8080/contato
+    @RequestMapping("/contato") // localhost:8080/contato
 @Validated
 public class ContatoController {
 
