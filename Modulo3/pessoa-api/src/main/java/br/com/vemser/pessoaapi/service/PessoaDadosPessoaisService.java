@@ -3,6 +3,7 @@ package br.com.vemser.pessoaapi.service;
 import br.com.vemser.pessoaapi.dto.DadosPessoaisDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDadosPessoaisDTO;
+import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.mapper.PessoaDadosPessoaisMapper;
 import br.com.vemser.pessoaapi.repository.PessoaComDadosPessoaisRepository;
@@ -40,6 +41,23 @@ public class PessoaDadosPessoaisService {
         pessoaComDadosPessoaisRepository.post(pessoaComDadosPessoais);
        return pessoaComDadosPessoais;
     }
+
+    public PessoaDadosPessoaisDTO put(String cpf, PessoaDadosPessoaisDTO pessoaAtualizar) throws RegraDeNegocioException {
+            PessoaDadosPessoaisDTO pessoaRecuperada = findByCPF(cpf);
+            pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
+            pessoaRecuperada.setNome(pessoaAtualizar.getNome());
+            pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
+            pessoaRecuperada.setSexo(pessoaAtualizar.getSexo());
+            pessoaRecuperada.setEmail(pessoaAtualizar.getEmail());
+            pessoaRecuperada.setCnh(pessoaAtualizar.getCnh());
+            pessoaRecuperada.setNomeMae(pessoaAtualizar.getNomeMae());
+            pessoaRecuperada.setNomePai(pessoaAtualizar.getNomePai());
+            pessoaRecuperada.setRg(pessoaAtualizar.getRg());
+            pessoaRecuperada.setTituloEleitor(pessoaAtualizar.getTituloEleitor());
+
+            return pessoaRecuperada;
+        }
+
 
     public void delete(String cpf) throws Exception {
         PessoaDadosPessoaisDTO pessoaRecuperada = findByCPF(cpf);
