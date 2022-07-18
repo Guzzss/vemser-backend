@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "4f9c54af-06c9-4a43-8c11-83edd1c54c4f",
+		"name": "Homework3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21782433"
+	},
+	"item": [
+		{
+			"name": "/endereco",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "/endereco/{idEndereco}",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "/endereco/{idPessoa}/pessoa",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "/endereco/{idPessoa}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/endereco",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/endereco/{idEndereco}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pais\": \"EUA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/endereco/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/endereco/{idEndereco}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/endereco",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
