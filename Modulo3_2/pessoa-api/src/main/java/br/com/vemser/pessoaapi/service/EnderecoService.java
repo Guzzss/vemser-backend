@@ -49,14 +49,14 @@ public class EnderecoService {
        return enderecoEntityRecuperado.stream().map(enderecoMapper::toDTO).toList();
     }
 
-    public EnderecoDTO create(EnderecoCreateDTO endereco, Integer idPessoa) throws RegraDeNegocioException {
+    public EnderecoDTO create(EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         log.info("Endereco criado");
-        pessoaService.findById(idPessoa);
+//        pessoaService.findById(idPessoa);
         EnderecoEntity enderecoEntity = enderecoMapper.fromCreateDTO(endereco);
 //        enderecoEntity.setIdPessoa(idPessoa);
         EnderecoDTO enderecoDTO = enderecoMapper.toDTO(enderecoRepository.save(enderecoEntity));
-        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(idPessoa));
-        emailService.sendEnderecoEmail(pessoaDTO, enderecoDTO);
+//        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(idPessoa));
+//        emailService.sendEnderecoEmail(pessoaDTO, enderecoDTO);
         return enderecoDTO;
     }
     public EnderecoDTO update(Integer id,

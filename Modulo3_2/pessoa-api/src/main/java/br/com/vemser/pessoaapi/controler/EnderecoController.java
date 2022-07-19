@@ -70,9 +70,9 @@ public class EnderecoController {
             }
     )
     @PostMapping("/{idPessoa}") // localhost:8080/endereco
-    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer id,
+    public ResponseEntity<EnderecoDTO> create(
                                           @RequestBody @Validated EnderecoCreateDTO endereco) throws RegraDeNegocioException {
-        return ResponseEntity.ok(enderecoService.create(endereco, id));
+        return ResponseEntity.ok(enderecoService.create(endereco));
     }
 
     @Operation(summary = "atualizar endereço", description = "Atualiza um endereço do banco")
