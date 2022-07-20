@@ -1,8 +1,10 @@
 package br.com.vemser.pessoaapi.controler;
 
 import br.com.vemser.pessoaapi.PropertieReader;
-import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
-import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.dto.*;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,8 @@ public class PessoaController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    PessoaRepository pessoaRepository;
 
     @GetMapping("/ambiente")
     public String retornarPropertie() {
@@ -115,4 +119,30 @@ public class PessoaController {
     public void delete(@PathVariable("idPessoa") Integer id) throws Exception {
         pessoaService.delete(id);
     }
+
+    @GetMapping("/{byNome}")
+    public List<PessoaEntity> findByNome(@RequestParam  ("byNome") String nome) {
+        return pessoaRepository.findByNomeContainsIgnoreCase(nome);
+    }
+
+    @GetMapping("/{byCpf}")
+    public List<PessoaEntity> findByCpf(@RequestParam("byCpf") String cpf) {
+        return pessoaRepository.findByCpf(cpf);
+    }
+
+    @GetMapping("/listar-pessoas-com-enderecos")
+    public List<PessoaDTOComEnderecos> listarPessoasComEnderecos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoasComEnderecos(idPessoa);
+    }
+
+    @GetMapping("/listar-pessoas-com-contatos")
+    public List<PessoasDTOComContatos> listarPessoasComContatos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoasComContatos(idPessoa);
+    }
+
+    @GetMapping("/Listar-pessoas-com-pets")
+    public List<PessoaDTOComPets> listarPessoasComPets(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoasComPets(idPessoa);
+    }
+
 }

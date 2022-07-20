@@ -8,5 +8,8 @@ import lombok.Getter;
 public class EnderecoDTO extends EnderecoCreateDTO {
     @Schema(description = "id do endereço")
     private Integer idEndereco;
+
+//    @Schema(description = "id da Pessoa")
+//    private Integer idPessoa;
 }
 

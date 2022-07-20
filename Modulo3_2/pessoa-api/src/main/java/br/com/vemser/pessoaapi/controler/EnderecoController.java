@@ -70,9 +70,9 @@ public class EnderecoController {
             }
     )
     @PostMapping("/{idPessoa}") // localhost:8080/endereco
-    public ResponseEntity<EnderecoDTO> create(
+    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer idPessoa,
                                           @RequestBody @Validated EnderecoCreateDTO endereco) throws RegraDeNegocioException {
-        return ResponseEntity.ok(enderecoService.create(endereco));
+        return ResponseEntity.ok(enderecoService.create(endereco, idPessoa));
     }
 
     @Operation(summary = "atualizar endereço", description = "Atualiza um endereço do banco")
@@ -84,9 +84,9 @@ public class EnderecoController {
             }
     )
     @PutMapping("/{idEndereco}") // localhost:8080/endereco/1
-    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer id,
+    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer idEndereco,
                            @RequestBody @Validated EnderecoCreateDTO enderecoAtualizar) throws RegraDeNegocioException {
-        return ResponseEntity.ok(enderecoService.update(id, enderecoAtualizar));
+        return ResponseEntity.ok(enderecoService.update(idEndereco, enderecoAtualizar));
     }
 
     @Operation(summary = "deletar endereço", description = "Deleta um endereço do banco")
@@ -100,5 +100,18 @@ public class EnderecoController {
     @DeleteMapping("/{idEndereco}") // localhost:8080/endereco/10
     public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         enderecoService.delete(id);
+    }
+
+    @Operation(summary = "deletar endereço de uma pessoa", description = "Deleta um endereço de uma pessoa do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Endereço deletado com sucesso"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @DeleteMapping("/{idPessoa}/{idEndereco}")
+    public void deletee(@PathVariable("idPessoa") Integer idPessoa ,@PathVariable("idEndereco") Integer idEndereco ) throws RegraDeNegocioException {
+        enderecoService.deletee(idPessoa, idEndereco);
     }
 }

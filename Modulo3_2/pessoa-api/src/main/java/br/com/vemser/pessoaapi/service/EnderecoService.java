@@ -3,16 +3,19 @@ package br.com.vemser.pessoaapi.service;
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.mapper.EnderecoMapper;
 import br.com.vemser.pessoaapi.mapper.PessoaMapper;
 import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.repository.EnderecoRepository;
+import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -33,6 +36,9 @@ public class EnderecoService {
     @Autowired
     private PessoaMapper pessoaMapper;
 
+
+    @Autowired
+    PessoaRepository pessoaRepository;
     public List<EnderecoDTO> list() {
         return enderecoRepository.findAll().stream().map(enderecoMapper::toDTO).toList();
     }
@@ -49,21 +55,20 @@ public class EnderecoService {
        return enderecoEntityRecuperado.stream().map(enderecoMapper::toDTO).toList();
     }
 
-    public EnderecoDTO create(EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public EnderecoDTO create(EnderecoCreateDTO endereco, Integer idPessoa) throws RegraDeNegocioException {
         log.info("Endereco criado");
-//        pessoaService.findById(idPessoa);
+        PessoaEntity pessoa = pessoaService.findById(idPessoa);
         EnderecoEntity enderecoEntity = enderecoMapper.fromCreateDTO(endereco);
-//        enderecoEntity.setIdPessoa(idPessoa);
+        enderecoEntity.setPessoas(Set.of(pessoa));
         EnderecoDTO enderecoDTO = enderecoMapper.toDTO(enderecoRepository.save(enderecoEntity));
-//        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(idPessoa));
-//        emailService.sendEnderecoEmail(pessoaDTO, enderecoDTO);
+        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(idPessoa));
+        emailService.sendEnderecoEmail(pessoaDTO, enderecoDTO);
         return enderecoDTO;
     }
     public EnderecoDTO update(Integer id,
                            EnderecoCreateDTO enderecoAtualizar) throws RegraDeNegocioException {
         log.info("Endereco alterado");
         EnderecoEntity enderecoEntityRecuperado = findById(id);
-//        enderecoEntityRecuperado.setIdPessoa(enderecoAtualizar.getIdEndereco());
         enderecoEntityRecuperado.setTipo(enderecoAtualizar.getTipo());
         enderecoEntityRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
         enderecoEntityRecuperado.setNumero(enderecoAtualizar.getNumero());
@@ -72,19 +77,23 @@ public class EnderecoService {
         enderecoEntityRecuperado.setCidade(enderecoAtualizar.getCidade());
         enderecoEntityRecuperado.setEstado(enderecoAtualizar.getEstado());
         enderecoEntityRecuperado.setPais(enderecoAtualizar.getPais());
-//        PessoaDTO pessoaDTO = pessoaMapper.toDTO(pessoaService.findById(id));
         enderecoRepository.save(enderecoEntityRecuperado);
         EnderecoDTO enderecoDTO = enderecoMapper.toDTO(enderecoEntityRecuperado);
-//        emailService.sendUpdateEnderecoEmail(pessoaDTO, enderecoDTO);
         return enderecoDTO;
     }
 
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        log.info("Endereco deletado");
         EnderecoEntity enderecoEntityRecuperado = findById(id);
-        emailService.sendDeleteEnderecoEmail(pessoaMapper.toDTO(pessoaService.findById(id)), enderecoMapper.toDTO(enderecoEntityRecuperado));
         enderecoRepository.delete(enderecoEntityRecuperado);
+        log.info("Endereco deletado");
+    }
+
+    public void deletee(Integer id, Integer idEndereco) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.findById(id);
+        findById(idEndereco);
+        enderecoRepository.delete(pessoaEntity.getEnderecos().stream().filter(endereco -> endereco.getIdEndereco().equals(idEndereco)).findFirst().get());
+            log.info("Endereco deletado");
     }
 
     public EnderecoEntity findById(Integer idEndereco) throws RegraDeNegocioException {
