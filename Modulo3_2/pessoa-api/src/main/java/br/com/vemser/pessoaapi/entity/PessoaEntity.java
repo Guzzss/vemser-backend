@@ -47,7 +47,7 @@ public class PessoaEntity {
     private Set<EnderecoEntity> enderecos;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_pet", referencedColumnName = "id_pet")
     private PetEntity pet;
 }

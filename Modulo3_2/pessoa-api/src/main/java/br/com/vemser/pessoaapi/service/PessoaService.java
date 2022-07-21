@@ -3,6 +3,8 @@ package br.com.vemser.pessoaapi.service;
 import br.com.vemser.pessoaapi.dto.*;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.mapper.ContatoMapper;
+import br.com.vemser.pessoaapi.mapper.EnderecoMapper;
 import br.com.vemser.pessoaapi.mapper.PessoaMapper;
 import br.com.vemser.pessoaapi.mapper.PetMapper;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
@@ -31,6 +33,11 @@ public class PessoaService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private ContatoMapper contatoMapper;
+
+    @Autowired
+    private EnderecoMapper enderecoMapper;
     @Autowired
     private PetMapper petMapper;
 
@@ -128,5 +135,25 @@ public class PessoaService {
             listaPessoasComPets.add(pessoaComPets);
         }
         return listaPessoasComPets;
+    }
+
+    public PessoaEntity salvar(PessoaEntity pessoaEntity) {
+        return this.pessoaRepository.save(pessoaEntity);
+    }
+
+    public List<PessoaComTudoDTO> pessoaComTudo(Integer id) {
+        List<PessoaEntity> lista = id == null ? pessoaRepository.findAll() : List.of(pessoaRepository.findById(id).get());
+        return lista.stream().map(pessoa -> {
+            PessoaComTudoDTO pessoaComTudoDTO =  objectMapper.convertValue(pessoa, PessoaComTudoDTO.class);;
+            pessoaComTudoDTO.setContatoDTOS(pessoa.getContatos().stream().map(contato -> contatoMapper.toDTO(contato)).toList());
+            pessoaComTudoDTO.setEnderecoDTOS(pessoa.getEnderecos().stream().map(endereco -> enderecoMapper.toDTO(endereco)).toList());
+            pessoaComTudoDTO.setPetDTO(petMapper.toDTO(pessoa.getPet()));
+            return pessoaComTudoDTO;
+        }).collect(Collectors.toList());
+    }
+
+    public List<PessoaCompostaDTO> listaCompostaDTO(Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaRepository.listaCompostaDTO(idPessoa);
+
     }
 }

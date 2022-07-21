@@ -2,7 +2,10 @@ package br.com.vemser.pessoaapi.controler;
 
 import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.vemser.pessoaapi.entity.TipoContato;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +24,9 @@ public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
+
+    @Autowired
+    private ContatoRepository contatoRepository;
 
     @Operation(summary = "listar contatos", description = "Lista todas os contatos do banco")
     @ApiResponses(
@@ -89,4 +95,8 @@ public class ContatoController {
         contatoService.delete(id);
     }
 
+    @GetMapping("/contato-tipo") // localhost:8080/contato/1
+    public List<ContatoEntity> listByTipo(TipoContato tipoContato) {
+        return contatoRepository.listEnderecoByTipo(tipoContato);
+    }
 }

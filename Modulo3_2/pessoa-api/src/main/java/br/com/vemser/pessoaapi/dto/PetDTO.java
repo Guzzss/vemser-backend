@@ -9,6 +9,6 @@ public class PetDTO extends PetCreateDTO{
     @Schema(description = "id do pet")
     private Integer idPet;
 
-    @Schema(description = "id da pessoa")
-    private Integer idPessoa;
+//    @Schema(description = "id da pessoa")
+//    private Integer idPessoa;
 }

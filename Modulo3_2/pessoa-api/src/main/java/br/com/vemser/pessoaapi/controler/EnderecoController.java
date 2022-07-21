@@ -2,7 +2,9 @@ package br.com.vemser.pessoaapi.controler;
 
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +23,9 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Operation(summary = "listar endereços", description = "Lista todos os endereços do banco")
     @ApiResponses(
@@ -114,4 +119,10 @@ public class EnderecoController {
     public void deletee(@PathVariable("idPessoa") Integer idPessoa ,@PathVariable("idEndereco") Integer idEndereco ) throws RegraDeNegocioException {
         enderecoService.deletee(idPessoa, idEndereco);
     }
+
+    @GetMapping("/pais") // localhost:8080/endereco/1
+    public List<EnderecoEntity> listByPais(String pais) {
+        return enderecoRepository.listEnderecoByPais(pais);
+    }
+
 }

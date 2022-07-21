@@ -23,4 +23,7 @@ public class PetCreateDTO {
     @NotNull(message = "O tipo do pet é obrigatório")
     private TipoPet tipo;
 
+    @Schema(description = "id da pessoa")
+    private Integer idPessoa;
+
 }

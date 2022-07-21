@@ -145,4 +145,13 @@ public class PessoaController {
         return pessoaService.listarPessoasComPets(idPessoa);
     }
 
+    @GetMapping("/Listar-pessoas-com-tudo")
+    public List<PessoaComTudoDTO> listarPessoasComTudo(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.pessoaComTudo(idPessoa);
+    }
+
+    @GetMapping("/pessoa-composta")
+    public List<PessoaCompostaDTO> listarPessoasCompostas(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listaCompostaDTO(idPessoa);
+    }
 }

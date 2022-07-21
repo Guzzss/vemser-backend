@@ -18,7 +18,7 @@ import java.util.List;
 public class PetService {
 
     @Autowired
-    PessoaRepository pessoaRepository;
+    private PessoaRepository pessoaRepository;
 
     @Autowired private PetRepository petRepository;
 
@@ -34,7 +34,6 @@ public class PetService {
 
         PetEntity petEntity = petMapper.fromCreateDTO(pet);
         petEntity.setPessoa(pessoaService.findById(idPessoa));
-        petEntity.setIdPessoa(idPessoa);
         pessoa.setPet(petEntity);
         pessoaRepository.save(pessoa);
         PetDTO petDTO = petMapper.toDTO(petRepository.save(petEntity));
@@ -42,9 +41,13 @@ public class PetService {
     }
 
     public PetDTO update(PetCreateDTO pet, Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoa = pessoaService.findById(pet.getIdPessoa());
+
         PetEntity petRecuperado = findById(id);
         petRecuperado.setNome(pet.getNome());
         petRecuperado.setTipo(pet.getTipo());
+        petRecuperado.setPessoa(pessoa);
+        pessoa.setPet(petRecuperado);
         petRepository.save(petRecuperado);
         return petMapper.toDTO(petRecuperado);
     }
