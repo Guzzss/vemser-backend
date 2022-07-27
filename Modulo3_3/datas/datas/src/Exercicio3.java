@@ -8,5 +8,6 @@ public class Exercicio3 {
 
         System.out.println("Dia da semana daqui 15 dias: " + dataPosterior.getDayOfWeek());
         System.out.println("Dia no ano corrido: " + dataPosterior.getDayOfYear());
+
     }
 }
